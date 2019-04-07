@@ -160,7 +160,9 @@ void mmu_init(void)
 	WRITE(MMU_RST_PIN, 1);
 	SET_OUTPUT(MMU_RST_PIN);                   //setup reset pin
 #endif //MMU_HWRESET
-	uart2_init();                              //init uart2
+	if (!MMU_Disabled_from_menu) {
+        uart2_init();                              //init uart2
+    }
 	_delay_ms(10);                             //wait 10ms for sure
 	mmu_reset();                               //reset mmu (HW or SW), do not wait for response
 	mmu_state = S::Init;
