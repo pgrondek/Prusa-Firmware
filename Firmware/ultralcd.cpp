@@ -5187,7 +5187,7 @@ static void disable_mmu_switch()
 
 static bool settingsDisableMMUFromMenu()
 {
-    if (mmu_enabled)
+    if (mmu_enabled || MMU_Disabled_from_menu)
     {
         if (!MMU_Disabled_from_menu)
         {
