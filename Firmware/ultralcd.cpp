@@ -67,6 +67,7 @@ uint8_t scrollstuff = 0;
 
 int8_t SilentModeMenu = SILENT_MODE_OFF;
 uint8_t SilentModeMenu_MMU = 1; //activate mmu unit stealth mode
+uint8_t MMU_Disabled_from_menu = 0;
 
 int8_t FSensorStateMenu = 1;
 
@@ -2005,6 +2006,8 @@ static void lcd_support_menu()
 				lcd_puts_P(_i("unknown"));  ////MSG_UNKNOWN c=13
 		}
 	}
+	else if (MMU_Disabled_from_menu)
+		MENU_ITEM_BACK_P(PSTR("MMU2  disabled"));
 	else
 		MENU_ITEM_BACK_P(PSTR("MMU2       N/A"));
 
@@ -5176,6 +5179,35 @@ do\
 }\
 while(0)\
 
+static void disable_mmu_switch()
+{
+    MMU_Disabled_from_menu = !MMU_Disabled_from_menu;
+    eeprom_update_byte((unsigned char *)EEPROM_MMU_DISABLED_FROM_MENU, MMU_Disabled_from_menu);
+}
+
+static bool settingsDisableMMUFromMenu()
+{
+    if (mmu_enabled)
+    {
+        if (!MMU_Disabled_from_menu)
+        {
+            if (menu_item_function_P(_i("MMU     [ENABLED]"), disable_mmu_switch)) return true;
+        }
+        else
+        {
+            if (menu_item_function_P(_i("MMU    [DISABLED]"), disable_mmu_switch)) return true;
+        }
+    }
+    return false;
+}
+
+#define SETTINGS_DISABLE_MMU_FROM_MENU \
+do\
+{\
+    if(settingsDisableMMUFromMenu()) return;\
+}\
+while(0)\
+
 #ifdef MMU_HAS_CUTTER
 static void settingsCutter()
 {
@@ -5708,6 +5740,8 @@ static void lcd_settings_menu()
 	SETTINGS_FILAMENT_SENSOR;
 
 	SETTINGS_AUTO_DEPLETE;
+	
+	SETTINGS_DISABLE_MMU_FROM_MENU;
 
 	SETTINGS_CUTTER;
 
