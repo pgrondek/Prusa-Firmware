@@ -982,6 +982,11 @@ void list_sec_lang_from_external_flash()
 // are initialized by the main() routine provided by the Arduino framework.
 void setup()
 {
+	MMU_Disabled_from_menu = eeprom_read_byte((uint8_t*)EEPROM_MMU_DISABLED_FROM_MENU);
+	if (MMU_Disabled_from_menu == 255) {
+		MMU_Disabled_from_menu = 0;
+		eeprom_write_byte((uint8_t*)EEPROM_MMU_DISABLED_FROM_MENU, MMU_Disabled_from_menu);
+	}
 	mmu_init();
 	
 	ultralcd_init();
@@ -1473,6 +1478,7 @@ void setup()
 		SilentModeMenu_MMU = 1;
 		eeprom_write_byte((uint8_t*)EEPROM_MMU_STEALTH, SilentModeMenu_MMU);
 	}
+	
 	check_babystep(); //checking if Z babystep is in allowed range
 
 #ifdef UVLO_SUPPORT

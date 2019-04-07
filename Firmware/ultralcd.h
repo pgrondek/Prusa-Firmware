@@ -119,6 +119,7 @@ extern int farm_status;
 
 extern int8_t SilentModeMenu;
 extern uint8_t SilentModeMenu_MMU;
+extern uint8_t MMU_Disabled_from_menu;
 
 extern bool cancel_heatup;
 extern bool isPrintPaused;
