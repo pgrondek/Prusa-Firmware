@@ -558,6 +558,9 @@
 #define FLEX_PREHEAT_HOTEND_TEMP 240
 #define FLEX_PREHEAT_HPB_TEMP 50
 
+#define FIBERWOOD_PREHEAT_HOTEND_TEMP 200
+#define FIBERWOOD_PREHEAT_HPB_TEMP 60
+
 /*------------------------------------
  THERMISTORS SETTINGS
  *------------------------------------*/
