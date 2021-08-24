@@ -4633,7 +4633,7 @@ eeprom_update_word((uint16_t*)EEPROM_NOZZLE_DIAMETER_uM,0xFFFF);
                nDiameter=(uint16_t)(code_value()*1000.0+0.5); // [,um]
                nozzle_diameter_check(nDiameter);
                }
-          else if(code_seen_P(PSTR("set")) && farm_mode)
+          else if(code_seen_P(PSTR("set")))
                {
                strchr_pointer++;                  // skip 1st char (~ 's')
                strchr_pointer++;                  // skip 2nd char (~ 'e')
