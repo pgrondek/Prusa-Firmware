@@ -4429,8 +4429,57 @@ eeprom_update_word((uint16_t*)EEPROM_NOZZLE_DIAMETER_uM,0xFFFF);
     //else if (code_seen('Cal')) {
 		//  lcd_calibration();
 	  // }
+	} else if (code_seen_P(PSTR("mode"))) { // PRUSA work mode
+	    if(code_seen_P(PSTR("set")))
+	    {
+	        int mode = (int)code_value();
+#ifdef TMC2130
+	        if (mode == SILENT_MODE_NORMAL || mode == SILENT_MODE_STEALTH)
+	        {
+	            SilentModeMenu = mode;
+	            eeprom_update_byte((unsigned char *)EEPROM_SILENT, SilentModeMenu);
 
-  } 
+	            SERIAL_PROTOCOLLN("OK");
+	        }
+	        else
+	            SERIAL_PROTOCOLLN("ERR: Wrong mode");
+#else
+	        if (mode == SILENT_MODE_POWER || mode == SILENT_MODE_SILENT || mode == SILENT_MODE_AUTO)
+	        {
+	            SilentModeMenu = mode;
+	            eeprom_update_byte((unsigned char *)EEPROM_SILENT, SilentModeMenu);
+
+	            SERIAL_PROTOCOLLN("OK");
+	        }
+	        else
+	            SERIAL_PROTOCOLLN("ERR: Wrong mode");
+#endif
+	    }
+	    else
+	    {
+#ifdef TMC2130
+	        if (SilentModeMenu == SILENT_MODE_NORMAL) SERIAL_PROTOCOLLN("Mode : \"Stealth\"");
+	        else SERIAL_PROTOCOLLN("Mode : \"Normal\"");
+
+#else
+            switch (SilentModeMenu)
+            {
+                case SILENT_MODE_POWER:
+                    SERIAL_PROTOCOLLN("Mode : \"High power\"");
+                    break;
+                case SILENT_MODE_SILENT:
+	                SERIAL_PROTOCOLLN("Mode : \"Silent\"");
+                    break;
+                case SILENT_MODE_AUTO:
+                    SERIAL_PROTOCOLLN("Mode : \"Auto power\"");
+                    break;
+                default:
+                    SERIAL_PROTOCOLLN("Mode : \"High power\"");
+                    break; /* (probably) not needed*/
+            }
+#endif
+	    }
+  }
   // This prevents reading files with "^" in their names.
   // Since it is unclear, if there is some usage of this construct,
   // it will be deprecated in 3.9 alpha a possibly completely removed in the future:
