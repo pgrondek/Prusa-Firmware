@@ -1,15 +1,18 @@
-# Prusa Firmware MK3
+# Enhanced Prusa Firmware MK3
 
-This repository contains the source code and the development versions of the firmware running on the [Original Prusa i3](https://prusa3d.com/) MK3S/MK3/MK2.5S/MK2.5 line of printers.
+This repository contains enhanced firmware of [Original Prusa i3](https://prusa3d.com/). 
 
-The latest official builds can be downloaded from [Prusa Drivers](https://www.prusa3d.com/drivers/). Pre-built development releases are also [available here](https://github.com/prusa3d/Prusa-Firmware/releases).
+Flash this firmware at your own risk. I'm not responsible for what you do on your device.
 
-The firmware for the Original Prusa i3 printers is proudly based on [Marlin 1.0.x](https://github.com/MarlinFirmware/Marlin/) by Scott Lahteine (@thinkyhead) et al. and is distributed under the terms of the [GNU GPL 3 license](LICENSE).
+The firmware for the Original Prusa i3 printers is proudly based on [Prusa Fimware](https://github.com/prusa3d/Prusa-Firmware) 
+and [Marlin 1.0.x](https://github.com/MarlinFirmware/Marlin/) by Scott Lahteine (@thinkyhead) et al. and is distributed 
+under the terms of the [GNU GPL 3 license](LICENSE).
 
 
 # Table of contents
 
 <!--ts-->
+   * [Additional features](#additional-features)
    * [Linux build](#linux)
    * Windows build
      * [Using Arduino](#using-arduino)
@@ -20,6 +23,12 @@ The firmware for the Original Prusa i3 printers is proudly based on [Marlin 1.0.
    * [FAQ](#5-faq)
 <!--te-->
 
+# Additional features
+
+* Added more nozzles (0.15 mm, 0.2 mm, 0.5 mm, 1.0 mm)
+* Enable setting nozzle diameter via GCode when not in farm-mode
+* Add Fiberwood to pre-heat menu
+* Add G-code to enable/disable stealth mode
 
 # Build
 ## Linux
