@@ -1,11 +1,11 @@
 # Enhanced Prusa Firmware MK3
 
-This repository contains enhanced firmware of [Original Prusa i3](https://prusa3d.com/). 
+This repository contains enhanced firmware of [Original Prusa i3](https://prusa3d.com/).
 
 Flash this firmware at your own risk. I'm not responsible for what you do on your device.
 
-The firmware for the Original Prusa i3 printers is proudly based on [Prusa Fimware](https://github.com/prusa3d/Prusa-Firmware) 
-and [Marlin 1.0.x](https://github.com/MarlinFirmware/Marlin/) by Scott Lahteine (@thinkyhead) et al. and is distributed 
+The firmware for the Original Prusa i3 printers is proudly based on [Prusa Fimware](https://github.com/prusa3d/Prusa-Firmware)
+and [Marlin 1.0.x](https://github.com/MarlinFirmware/Marlin/) by Scott Lahteine (@thinkyhead) et al. and is distributed
 under the terms of the [GNU GPL 3 license](LICENSE).
 
 
@@ -29,17 +29,18 @@ under the terms of the [GNU GPL 3 license](LICENSE).
 * Enable setting nozzle diameter via GCode when not in farm-mode
 * Add Fiberwood to pre-heat menu
 * Add G-code to enable/disable stealth mode
+* Option to enable/disable MMU from menu
 
 # Build
 ## Linux
 
 1. Clone this repository and checkout the correct branch for your desired release version.
 
-1. Set your printer model. 
-   - For MK3 --> skip to step 3. 
+1. Set your printer model.
+   - For MK3 --> skip to step 3.
    - If you have a different printer model, follow step [2.b](#2b) from Windows build
-1. Install GNU AWK  `sudo apt-get install gawk`  
-If you use mawk instead of gawk you get strange errors when multi language support is generated like:  
+1. Install GNU AWK  `sudo apt-get install gawk`
+If you use mawk instead of gawk you get strange errors when multi language support is generated like:
 `awk: line 2: function strtonum never defined
 sed: couldn't write 4 items to stdout: Broken pipe
 ./lang-build.sh: 121: ./lang-build.sh: arithmetic expression: expecting EOF: "0x"awk: line 2: function strtonum never defined
@@ -52,7 +53,7 @@ tr: write error
 cut: write error: Broken pipeNG! - some texts not found in lang_en.txt! updating binary:
   primary language ids...awk: line 2: function strtonum never defined
 sed: couldn't flush stdout: Broken pipe`
-   
+
 1. Run `./build.sh`
    - Output hex file is at `"PrusaFirmware/lang/firmware.hex"` . In the same folder you can hex files for other languages as well.
 
@@ -70,8 +71,8 @@ _Note: Multi language build is not supported._
 
 #### 1. Development environment preparation
 
-**a.** Install `"Arduino Software IDE"` from the official website `https://www.arduino.cc -> Software->Downloads` 
-   
+**a.** Install `"Arduino Software IDE"` from the official website `https://www.arduino.cc -> Software->Downloads`
+
    _It is recommended to use version `"1.8.5"`, as it is used on out build server to produce official builds._
 
 **b.** Setup Arduino to use Prusa Rambo board definition
@@ -81,17 +82,17 @@ _Note: Multi language build is not supported._
 * Open Board manager (`Tools->Board->Board manager`), and install `Prusa Research AVR Boards by Prusa Research`
 
 **c.** Modify compiler flags in `platform.txt` file
-     
+
 * The platform.txt file can be found in Arduino installation directory, or after Arduino has been updated at: `"C:\Users\(user)\AppData\Local\Arduino15\packages\arduino\hardware\avr\(version)"` If you can locate the file in both places, file from user profile is probably used.
-       
-* Add `"-Wl,-u,vfprintf -lprintf_flt -lm"` to `"compiler.c.elf.flags="` before existing flag "-Wl,--gc-sections"  
+
+* Add `"-Wl,-u,vfprintf -lprintf_flt -lm"` to `"compiler.c.elf.flags="` before existing flag "-Wl,--gc-sections"
 
     For example:  `"compiler.c.elf.flags=-w -Os -Wl,-u,vfprintf -lprintf_flt -lm -Wl,--gc-sections"`
-   
+
 _Notes:_
 
 
-_In the case of persistent compilation problems, check the version of the currently used C/C++ compiler (GCC) - should be at leas `4.8.1`; 
+_In the case of persistent compilation problems, check the version of the currently used C/C++ compiler (GCC) - should be at leas `4.8.1`;
 If you are not sure where the file is placed (depends on how `"Arduino Software IDE"` was installed), you can use the search feature within the file system_
 
 _Name collision for `"LiquidCrystal"` library known from previous versions is now obsolete (so there is no need to delete or rename original file/-s)_
@@ -100,20 +101,20 @@ _Name collision for `"LiquidCrystal"` library known from previous versions is no
 
 **a.** Clone this repository`https://github.com/prusa3d/Prusa-Firmware/` to your local drive.
 
-**b.**<a name="2b"></a> In the subdirectory `"Firmware/variants/"` select the configuration file (`.h`) corresponding to your printer model, make copy named `"Configuration_prusa.h"` (or make simple renaming) and copy it into `"Firmware/"` directory.  
+**b.**<a name="2b"></a> In the subdirectory `"Firmware/variants/"` select the configuration file (`.h`) corresponding to your printer model, make copy named `"Configuration_prusa.h"` (or make simple renaming) and copy it into `"Firmware/"` directory.
 
 **c.**<a name="2c"></a> In file `"Firmware/config.h"` set LANG_MODE to 0.
 
-**d.** Run `"Arduino IDE"`; select the file `"Firmware.ino"` from the subdirectory `"Firmware/"` at the location, where you placed the source code `File->Open` Make the desired code customizations; **all changes are on your own risk!**  
+**d.** Run `"Arduino IDE"`; select the file `"Firmware.ino"` from the subdirectory `"Firmware/"` at the location, where you placed the source code `File->Open` Make the desired code customizations; **all changes are on your own risk!**
 
-**e.** Select the target board `"Tools->Board->PrusaResearch Einsy RAMBo"`  
+**e.** Select the target board `"Tools->Board->PrusaResearch Einsy RAMBo"`
 
-**f.** Run the compilation `Sketch->Verify/Compile`  
+**f.** Run the compilation `Sketch->Verify/Compile`
 
-**g.** Upload the result code into the connected printer `Sketch->Upload`  
+**g.** Upload the result code into the connected printer `Sketch->Upload`
 
-* or you can also save the output code to the file (in so called `HEX`-format) `"Firmware.ino.rambo.hex"`:  `Sketch->ExportCompiledBinary` and then upload it to the printer using the program `"FirmwareUpdater"`  
-_note: this file is created in the directory `"Firmware/"`_  
+* or you can also save the output code to the file (in so called `HEX`-format) `"Firmware.ino.rambo.hex"`:  `Sketch->ExportCompiledBinary` and then upload it to the printer using the program `"FirmwareUpdater"`
+_note: this file is created in the directory `"Firmware/"`_
 
 ### Using Linux subsystem under Windows 10 64-bit
 _notes: Script and instructions contributed by 3d-gussner. Use at your own risk. Script downloads Arduino executables outside of Prusa control. Report problems [there.](https://github.com/3d-gussner/Prusa-Firmware/issues) Multi language build is supported._
@@ -128,11 +129,10 @@ _notes: Script and instructions contributed by 3d-gussner. Use at your own risk.
   - to install dos2unix run `sudo apt-get install dos2unix`
   - run `dos2unix PF-build.sh` to convert the windows line endings to unix line endings
   - add few lines at the top of `~/.bashrc` by running `sudo nano ~/.bashrc`
-	
 	export OS="Linux"
 	export JAVA_TOOL_OPTIONS="-Djava.net.preferIPv4Stack=true"
 	export GPG_TTY=$(tty)
-	
+
 	use `CRTL-X` to close nano and confirm to write the new entries
   - restart Ubuntu/Debian bash
   - Now your Ubuntu/Debian subsystem is ready to use the automatic `PF-build.sh` script and compile your firmware correctly
