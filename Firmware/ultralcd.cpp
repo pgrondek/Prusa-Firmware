@@ -1851,6 +1851,7 @@ static void disable_mmu_switch()
 {
     MMU_Disabled_from_menu = !MMU_Disabled_from_menu;
     eeprom_update_byte((unsigned char *)EEPROM_MMU_DISABLED_FROM_MENU, MMU_Disabled_from_menu);
+    softReset();
 }
 
 static bool settingsDisableMMUFromMenu()
