@@ -472,7 +472,7 @@ void __attribute__((noinline)) PID_autotune(float temp, int extruder, int ncycle
 			//SERIAL_ECHOPGM("s. Difference between current and ambient T: ");
 			//MYSERIAL.println(input - temp_ambient);
 
-			if (abs(input - temp_ambient) < 5.0) { 
+			if (fabs(input - temp_ambient) < 5.0) { 
 				temp_runaway_stop(false, (extruder<0));
 				pid_tuning_finished = true;
 				return;
@@ -1683,6 +1683,16 @@ void adc_ready(void) //callback from adc when sampling finished
 
 FORCE_INLINE static void temperature_isr()
 {
+#ifdef DEBUG_PULLUP_CRASH
+    // check for faulty pull-ups enabled on thermistor inputs
+    if ((PORTF & (uint8_t)(ADC_DIDR_MSK & 0xff)) || (PORTK & (uint8_t)((ADC_DIDR_MSK >> 8) & 0xff)))
+        pullup_error(true);
+#else
+    PORTF &= ~(uint8_t)(ADC_DIDR_MSK & 0xff);
+    PORTK &= ~(uint8_t)((ADC_DIDR_MSK >> 8) & 0xff);
+#endif // DEBUG_PULLUP_CRASH
+
+
 	if (!temp_meas_ready) adc_cycle();
 	lcd_buttons_update();
 

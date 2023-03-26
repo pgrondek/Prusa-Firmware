@@ -243,8 +243,6 @@ uint8_t tmc2130_sample_diag()
 	return mask;
 }
 
-extern bool is_usb_printing;
-
 void tmc2130_st_isr()
 {
 	if (tmc2130_mode == TMC2130_MODE_SILENT || tmc2130_sg_stop_on_crash == false) return;
@@ -979,7 +977,7 @@ void bubblesort_uint8(uint8_t* data, uint8_t size, uint8_t* data2)
 		for (uint8_t i = 0; i < (size - 1); i++)
 			if (data[i] > data[i+1])
 			{
-				uint8_t register d = data[i];
+				uint8_t d = data[i];
 				data[i] = data[i+1];
 				data[i+1] = d;
 				if (data2)
