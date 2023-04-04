@@ -1,11 +1,11 @@
 # Enhanced Prusa Firmware MK3
 
-This repository contains enhanced firmware of [Original Prusa i3](https://prusa3d.com/). 
+This repository contains enhanced firmware of [Original Prusa i3](https://prusa3d.com/).
 
 Flash this firmware at your own risk. I'm not responsible for what you do on your device.
 
-The firmware for the Original Prusa i3 printers is proudly based on [Prusa Fimware](https://github.com/prusa3d/Prusa-Firmware) 
-and [Marlin 1.0.x](https://github.com/MarlinFirmware/Marlin/) by Scott Lahteine (@thinkyhead) et al. and is distributed 
+The firmware for the Original Prusa i3 printers is proudly based on [Prusa Fimware](https://github.com/prusa3d/Prusa-Firmware)
+and [Marlin 1.0.x](https://github.com/MarlinFirmware/Marlin/) by Scott Lahteine (@thinkyhead) et al. and is distributed
 under the terms of the [GNU GPL 3 license](LICENSE).
 
 
@@ -29,17 +29,18 @@ under the terms of the [GNU GPL 3 license](LICENSE).
 * Enable setting nozzle diameter via GCode when not in farm-mode
 * Add Fiberwood to pre-heat menu
 * Add G-code to enable/disable stealth mode
+* Option to enable/disable MMU from menu
 
 # Build
 ## Linux
 
 1. Clone this repository and checkout the correct branch for your desired release version.
 
-1. Set your printer model. 
-   - For MK3 --> skip to step 3. 
+1. Set your printer model.
+   - For MK3 --> skip to step 3.
    - If you have a different printer model, follow step [2.b](#2b) from Windows build
-1. Install GNU AWK  `sudo apt-get install gawk`  
-If you use mawk instead of gawk you get strange errors when multi language support is generated like:  
+1. Install GNU AWK  `sudo apt-get install gawk`
+If you use mawk instead of gawk you get strange errors when multi language support is generated like:
 `awk: line 2: function strtonum never defined
 sed: couldn't write 4 items to stdout: Broken pipe
 ./lang-build.sh: 121: ./lang-build.sh: arithmetic expression: expecting EOF: "0x"awk: line 2: function strtonum never defined
